@@ -4,6 +4,7 @@ import { TimeLineData, Aboutme } from '../../constants/constants'
 
 const Timeline = () => (
   <section id="about" className="max-w-content mx-auto px-4 py-6 md:px-12 md:py-8 overflow-hidden">
+    <SectionDivider className="mb-6" />
     <SectionTitle>About Me</SectionTitle>
 
     {Aboutme.paragraphs.map((p, i) => (
@@ -18,7 +19,8 @@ const Timeline = () => (
       </motion.div>
     ))}
 
-    <h3 className="text-xl font-semibold text-slate-700 dark:text-white/80 mb-10 mt-4">My Journey</h3>
+    <SectionDivider className="mt-14 mb-6" />
+    <SectionTitle>My Journey</SectionTitle>
 
     {/* Timeline */}
     <div className="relative">
