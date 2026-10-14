@@ -13,7 +13,7 @@ const Hero = () => (
         lg:text-[56px] lg:leading-[72px]"
     >
       Hi, I&apos;m <br />
-      BlessingkeyzTheDev
+      KomeTheDev
     </motion.h1>
 
     <motion.p
