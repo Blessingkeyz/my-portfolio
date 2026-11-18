@@ -9,10 +9,8 @@ export const Section = ({ children, id, className = '' }) => (
 
 export const SectionTitle = ({ children, main, className = '' }) => (
   <h2
-    className={`font-extrabold bg-gradient-to-br from-dark-bg to-dark-bg/70 dark:from-white dark:to-white/60 bg-clip-text text-transparent mb-4
-      ${main
-        ? 'text-4xl leading-tight pt-6 pb-3 md:text-5xl md:leading-[56px] md:pt-14 md:pb-4 lg:text-[56px] lg:leading-[72px]'
-        : 'text-3xl leading-tight md:text-4xl md:leading-[48px] lg:text-[48px] lg:leading-[56px]'}
+    className={`font-bold bg-gradient-to-br from-dark-bg to-dark-bg/70 dark:from-white dark:to-white/60 bg-clip-text text-transparent pb-1 mb-6
+      text-title ${main ? 'pt-6 md:pt-14' : ''}
       ${className}`}
   >
     {children}
@@ -21,8 +19,7 @@ export const SectionTitle = ({ children, main, className = '' }) => (
 
 export const SectionText = ({ children, className = '' }) => (
   <p
-    className={`max-w-3xl text-base leading-6 font-light pb-6 text-slate-600/80 dark:text-white/50
-      md:text-xl md:leading-8 md:pb-10 lg:text-2xl lg:leading-10 lg:pb-14 ${className}`}
+    className={`max-w-3xl text-lead font-light pb-8 text-slate-600 dark:text-white/60 md:pb-12 ${className}`}
   >
     {children}
   </p>
@@ -30,8 +27,7 @@ export const SectionText = ({ children, className = '' }) => (
 
 export const SectionText2 = ({ children, className = '' }) => (
   <p
-    className={`text-base text-justify leading-6 font-light pb-6 text-slate-600/80 dark:text-white/50
-      md:text-xl md:leading-8 md:pb-10 lg:text-2xl lg:leading-10 lg:pb-14 ${className}`}
+    className={`max-w-4xl text-lead font-light pb-6 text-slate-600 dark:text-white/60 ${className}`}
   >
     {children}
   </p>

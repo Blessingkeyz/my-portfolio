@@ -1,146 +1,163 @@
-import { useState } from 'react'
 import { motion } from 'motion/react'
-import { HiX, HiExternalLink } from 'react-icons/hi'
+import { HiExternalLink, HiLockClosed } from 'react-icons/hi'
+import { AiFillGithub } from 'react-icons/ai'
 import { SectionDivider, SectionTitle } from '../../styles/GlobalComponents'
 import { projects } from '../../constants/constants'
 
-const ProjectModal = ({ project, onClose }) => {
-  if (!project) return null
+const featured = projects.filter((p) => p.featured)
+const others = projects.filter((p) => !p.featured)
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.92, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FAFAFA] dark:bg-dark-card shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
+const reveal = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+}
+
+const Tags = ({ tags }) => (
+  <ul className="flex flex-wrap gap-2">
+    {tags.map((tag) => (
+      <li
+        key={tag}
+        className="text-caption px-3 py-1 rounded-full border border-slate-300 text-slate-600 dark:border-white/15 dark:text-white/70"
       >
-        <img src={project.image} alt={project.title} className="w-full h-56 object-cover rounded-t-2xl" />
+        {tag}
+      </li>
+    ))}
+  </ul>
+)
 
-        <button
-          onClick={onClose}
-          aria-label="Close"
-          className="absolute top-3 right-3 p-1.5 rounded-full bg-black/40 text-white hover:bg-black/60 transition-colors"
-        >
-          <HiX size="1.3rem" />
-        </button>
+const ProjectLink = ({ href, label, ariaLabel, icon: Icon }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`${ariaLabel} (opens in a new tab)`}
+    className="inline-flex items-center gap-1.5 text-body font-semibold text-accent-cyan hover:underline underline-offset-4"
+  >
+    {label}
+    <Icon className="w-4 h-4" />
+  </a>
+)
 
-        <div className="p-6">
-          <h3 className="font-semibold text-xl text-[#1a7fa0] dark:text-[#9cc9e3] mb-3 leading-snug">{project.title}</h3>
-          <hr className="w-[50px] h-[3px] mb-4 border-0 bg-[#d0bb57]" />
-          <p className="text-slate-600 dark:text-slate-300 text-sm leading-7 text-justify">{project.description}</p>
+const PrivateBadge = () => (
+  <span className="inline-flex items-center gap-1.5 text-small text-slate-500 dark:text-white/50">
+    <HiLockClosed className="w-4 h-4" />
+    Private · client work
+  </span>
+)
 
-          <div className="mt-6">
-            <p className="text-sm font-semibold text-slate-500 dark:text-white/60 mb-2">Stack</p>
-            <ul className="flex flex-wrap gap-2">
-              {project.tags.map((tag, i) => (
-                <li key={i} className="text-slate-500 dark:text-[#d8bfbf] text-sm">{tag}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="mt-6">
-            <a
-              href={project.visit}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl bg-accent-cyan text-white text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              <HiExternalLink size="1rem" />
-              View Project
-            </a>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+const ProjectFooter = ({ project }) => {
+  const { visit, repo, title } = project
+  if (!visit && !repo) return project.private ? <PrivateBadge /> : null
+  return (
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+      {visit && <ProjectLink href={visit} label="Visit site" ariaLabel={`Visit ${title}`} icon={HiExternalLink} />}
+      {repo && <ProjectLink href={repo} label="View code" ariaLabel={`View ${title} source code`} icon={AiFillGithub} />}
+    </div>
   )
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.15, ease: 'easeOut' },
-  }),
-}
+const FeaturedProject = ({ project, index }) => {
+  const imageRight = index % 2 === 1
+  const { title, subtitle, description, context, image, tags, visit } = project
 
-const Projects = () => {
-  const [activeProject, setActiveProject] = useState(null)
+  const screenshot = (
+    <img
+      src={image}
+      alt={`Screenshot of ${title}`}
+      loading="lazy"
+      className="w-full aspect-[2880/1252] object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+    />
+  )
 
   return (
-    <section id="projects" className="max-w-content mx-auto px-4 md:px-12">
-      <SectionDivider />
-      <SectionTitle main>Projects</SectionTitle>
-      <div className="grid grid-cols-1 gap-8 pb-12 md:grid-cols-2">
-        {projects.map((project, i) => {
-          const { id, image, title, description, tags, visit } = project
-          return (
-            <motion.div
-              key={id}
-              custom={i}
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              whileHover={{ y: -8, boxShadow: '0 24px 48px rgba(0,0,0,0.15)' }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="flex flex-col h-[680px] rounded-xl shadow-[3px_3px_20px_rgba(80,78,78,0.5)] text-center w-full bg-[#FAFAFA] dark:bg-dark-card overflow-hidden cursor-default"
-            >
-              <img src={image} alt={title} className="w-full h-64 object-cover flex-shrink-0" />
-
-              <div className="flex-shrink-0 pt-4">
-                <h3 className="font-medium tracking-widest text-[#1a7fa0] dark:text-[#9cc9e3] py-2 text-xl md:text-2xl">{title}</h3>
-                <hr className="w-[50px] h-[3px] mx-auto my-4 border-0 bg-[#d0bb57]" />
-              </div>
-
-              <div className="flex-1 flex flex-col px-3 overflow-hidden">
-                <p className="text-slate-600 dark:text-slate-300 text-sm leading-6 text-justify line-clamp-5">
-                  {description}
-                </p>
-                <button
-                  onClick={() => setActiveProject(project)}
-                  className="mt-1 self-end text-xs text-[#1a7fa0] dark:text-[#9cc9e3] hover:underline"
-                >
-                  Read more...
-                </button>
-              </div>
-
-              <div className="flex-shrink-0 mt-4">
-                <p className="text-sm font-semibold text-slate-500 dark:text-white/60 mb-2">Stack</p>
-                <ul className="flex flex-wrap justify-around px-4 md:px-8 py-2 gap-2">
-                  {tags.map((tag, idx) => (
-                    <li key={idx} className="text-slate-500 dark:text-[#d8bfbf] text-sm">{tag}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="flex-shrink-0 flex justify-center mb-8 mt-4 px-4">
-                <a
-                  href={visit}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-accent-cyan text-white text-sm font-medium hover:opacity-90 transition-opacity"
-                >
-                  <HiExternalLink size="1rem" />
-                  View Project
-                </a>
-              </div>
-            </motion.div>
-          )
-        })}
+    <motion.article
+      {...reveal}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className="grid gap-6 items-center md:grid-cols-12 md:gap-10"
+    >
+      <div className={`md:col-span-7 ${imageRight ? 'md:order-2' : ''}`}>
+        {visit ? (
+          <a
+            href={visit}
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={-1}
+            aria-hidden="true"
+            className="group block overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 shadow-lg"
+          >
+            {screenshot}
+          </a>
+        ) : (
+          <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 shadow-lg">
+            {screenshot}
+          </div>
+        )}
       </div>
 
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
-    </section>
+      <div className={`md:col-span-5 ${imageRight ? 'md:order-1' : ''}`}>
+        {context && (
+          <p className="text-caption font-semibold uppercase tracking-widest text-accent-cyan mb-2">{context}</p>
+        )}
+        <h3 className="text-headline font-bold text-dark-bg dark:text-white">{title}</h3>
+        <p className="text-lead font-light text-slate-600 dark:text-white/60 mb-4">{subtitle}</p>
+        <p className="text-body text-slate-600 dark:text-white/70 mb-6">{description}</p>
+        <div className="mb-6">
+          <Tags tags={tags} />
+        </div>
+        <ProjectFooter project={project} />
+      </div>
+    </motion.article>
   )
 }
+
+const OtherProject = ({ project, index }) => {
+  const { title, subtitle, description, context, tags } = project
+  return (
+    <motion.li
+      {...reveal}
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1, ease: 'easeOut' }}
+      className="flex flex-col h-full p-6 rounded-xl bg-light-card dark:bg-dark-card border border-slate-200 dark:border-white/10
+        transition-colors hover:border-accent-cyan/50"
+    >
+      {context && (
+        <p className="text-caption font-semibold uppercase tracking-widest text-accent-cyan mb-2">{context}</p>
+      )}
+      <h4 className="text-heading font-semibold text-dark-bg dark:text-white">{title}</h4>
+      <p className="text-small text-slate-500 dark:text-white/50 mb-3">{subtitle}</p>
+      <p className="text-body text-slate-600 dark:text-white/70 mb-5 flex-1">{description}</p>
+      <div className="mb-5">
+        <Tags tags={tags} />
+      </div>
+      <ProjectFooter project={project} />
+    </motion.li>
+  )
+}
+
+const Projects = () => (
+  <section id="projects" className="max-w-content mx-auto px-4 py-6 md:px-12 md:py-8">
+    <SectionDivider />
+    <SectionTitle main>Projects</SectionTitle>
+
+    <div className="flex flex-col gap-16 md:gap-24 pb-16 md:pb-24">
+      {featured.map((project, i) => (
+        <FeaturedProject key={project.id} project={project} index={i} />
+      ))}
+    </div>
+
+    {others.length > 0 && (
+      <>
+        <h3 className="text-caption font-semibold uppercase tracking-widest text-slate-500 dark:text-white/50 mb-6">
+          Other work
+        </h3>
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {others.map((project, i) => (
+            <OtherProject key={project.id} project={project} index={i} />
+          ))}
+        </ul>
+      </>
+    )}
+  </section>
+)
 
 export default Projects

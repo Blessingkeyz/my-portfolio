@@ -1,9 +1,6 @@
 import { motion } from "motion/react";
-import {
-  AiFillGithub,
-  AiFillTwitterCircle,
-  AiFillLinkedin,
-} from "react-icons/ai";
+import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { FaXTwitter } from "react-icons/fa6";
 
 const socialLinks = [
   {
@@ -17,14 +14,14 @@ const socialLinks = [
     label: "LinkedIn",
   },
   {
-    href: "https://twitter.com/blessingkeyzz",
-    icon: AiFillTwitterCircle,
-    label: "Twitter",
+    href: "https://x.com/blessingkeyzz",
+    icon: FaXTwitter,
+    label: "X (Twitter)",
   },
 ];
 
 const Footer = () => (
-  <footer className="border-t border-slate-200 dark:border-white/10 mt-12">
+  <footer id="contact" className="scroll-mt-20 border-t border-slate-200 dark:border-white/10 mt-12">
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -46,7 +43,7 @@ const Footer = () => (
             alt="KomeTheDev"
             className="h-10 w-auto sm:h-11 md:h-12 hidden dark:block"
           />
-          <span className="text-xl font-semibold text-slate-800 dark:text-white tracking-wide">
+          <span className="text-heading font-semibold text-slate-800 dark:text-white">
             KomeTheDev
           </span>
         </div>
@@ -68,7 +65,7 @@ const Footer = () => (
         </div>
 
         {/* Contact — stacked on mobile, right-aligned on lg */}
-        <div className="flex flex-col items-center md:items-end gap-1 text-sm text-slate-500 dark:text-white/50">
+        <div className="flex flex-col items-center md:items-end gap-1 text-small text-slate-600 dark:text-white/60">
           <a
             href={`mailto:umukoroblessing@gmail.com?subject=${encodeURIComponent("Project Inquiry — KomeTheDev")}&body=${encodeURIComponent("Hi Blessing,\n\nI came across your portfolio and I'd like to discuss a project with you.\n\nProject details:\n\n\nBudget/Timeline:\n\n\nLooking forward to hearing from you!")}`}
             className="hover:text-accent-cyan transition-colors"
@@ -85,7 +82,7 @@ const Footer = () => (
       </div>
 
       {/* Copyright — always centered below */}
-      <p className="text-xs text-slate-400 dark:text-white/30 text-center mt-8">
+      <p className="text-caption text-slate-500 dark:text-white/50 text-center mt-8">
         &copy; {new Date().getFullYear()} KomeTheDev. All rights reserved.
       </p>
     </motion.div>

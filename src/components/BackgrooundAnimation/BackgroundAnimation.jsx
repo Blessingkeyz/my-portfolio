@@ -41,7 +41,7 @@ const BackgroundAnimation = () => {
             <mpath xlinkHref="#path_2" />
           </animateMotion>
         </path>
-        <ellipse cx="295.027" cy="193.118" transform="translate(-295.027 -193.118)" rx="1.07306" ry="1.07433" fill="#46737">
+        <ellipse cx="295.027" cy="193.118" transform="translate(-295.027 -193.118)" rx="1.07306" ry="1.07433" fill="#F46737">
           <animateMotion dur="5s" begin="1" repeatCount="indefinite" rotate="auto">
             <mpath xlinkHref="#path_2" />
           </animateMotion>

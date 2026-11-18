@@ -13,6 +13,10 @@
     scroll-behavior: smooth;
   }
 
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     font-family: 'Space Grotesk', sans-serif;
     @apply bg-light-bg text-dark-bg dark:bg-dark-bg dark:text-white;

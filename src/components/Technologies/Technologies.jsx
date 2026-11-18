@@ -6,15 +6,15 @@ import {
 import {
   SiNextdotjs, SiTypescript, SiTailwindcss,
   SiGithubactions, SiVuedotjs, SiExpress, SiVercel, SiPostman,
-  SiAngular, SiFigma,
+  SiAngular, SiFigma, SiDotnet,
 } from 'react-icons/si'
 import { SectionDivider, SectionTitle, SectionText } from '../../styles/GlobalComponents'
 
 const categories = [
   {
     title: 'Languages',
-    icons: [DiHtml5, DiCss3, DiJavascript1, SiTypescript, DiPython],
-    text: 'HTML, CSS, JavaScript, TypeScript, Python',
+    icons: [DiHtml5, DiCss3, DiJavascript1, SiTypescript, DiPython, SiDotnet],
+    text: 'HTML, CSS, JavaScript, TypeScript, Python, C# (currently learning)',
   },
   {
     title: 'Frontend Development',
@@ -35,8 +35,7 @@ const categories = [
 
 const Technologies = () => (
   <section id="tech" className="max-w-content mx-auto px-4 py-6 md:px-12 md:py-8">
-    <SectionDivider />
-    <br />
+    <SectionDivider className="mb-6" />
     <SectionTitle>Technologies</SectionTitle>
     <SectionText>
       I've worked with a range of frontend and backend technologies in web development.
@@ -67,8 +66,8 @@ const Technologies = () => (
             ))}
           </div>
           <div>
-            <h4 className="text-lg font-semibold text-slate-800 dark:text-white mb-1">{cat.title}</h4>
-            <p className="text-sm text-slate-600 dark:text-white/70 md:text-base">{cat.text}</p>
+            <h4 className="text-heading font-semibold text-slate-800 dark:text-white mb-1">{cat.title}</h4>
+            <p className="text-body text-slate-600 dark:text-white/70">{cat.text}</p>
           </div>
         </motion.li>
       ))}

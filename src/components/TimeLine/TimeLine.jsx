@@ -20,7 +20,7 @@ const Timeline = () => (
     ))}
 
     <SectionDivider className="mt-14 mb-6" />
-    <SectionTitle>My Journey</SectionTitle>
+    <SectionTitle>Education &amp; Milestones</SectionTitle>
 
     {/* Timeline */}
     <div className="relative">
@@ -49,13 +49,13 @@ const Timeline = () => (
               <motion.div
                 whileHover={{ y: -5, boxShadow: '0 16px 32px rgba(0,0,0,0.12)' }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className={`w-full md:w-[45%] bg-[#FAFAFA] dark:bg-dark-card rounded-xl px-5 py-4 shadow-md
+                className={`w-full md:w-[45%] bg-light-card dark:bg-dark-card rounded-xl px-5 py-4 shadow-md
                 ${isLeft ? 'md:mr-auto md:ml-0' : 'md:ml-auto md:mr-0'}
               `}>
-                <span className="inline-block text-xs font-bold tracking-widest uppercase text-accent-cyan mb-1">
+                <span className="inline-block text-caption font-bold tracking-widest uppercase text-accent-cyan mb-1">
                   {item.year}
                 </span>
-                <p className="text-sm leading-6 text-slate-600 dark:text-white/75">
+                <p className="text-body text-slate-600 dark:text-white/75">
                   {item.text}
                 </p>
               </motion.div>

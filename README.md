@@ -1,4 +1,4 @@
 ## Personal Portfolio
 
-##![Portfolio Website] https://blessingkeyzthedev.vercel.app/
+##![Portfolio Website] https://www.kome.is-a.dev/
 "# my-portfolio" 
